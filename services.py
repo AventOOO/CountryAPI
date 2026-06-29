@@ -1,24 +1,38 @@
 import requests
+from fastapi import HTTPException
 
 API_KEY = "rc_live_04493428440b4c949250cc5d380b4ee6"
-
 BASE_URL = "https://api.restcountries.com/countries/v5/names.common"
 
 
 def get_country(name: str):
-
     headers = {
         "Authorization": f"Bearer {API_KEY}"
     }
 
     url = f"{BASE_URL}/{name}"
-
     response = requests.get(url, headers=headers)
 
+    # Проверяем ответ API
     if response.status_code != 200:
-        return None
+        raise HTTPException(
+            status_code=response.status_code,
+            detail="Ошибка при обращении к REST Countries API"
+        )
 
-    country = response.json()["data"]["objects"][0]
+    data = response.json()
+
+    # Получаем список стран
+    objects = data.get("data", {}).get("objects", [])
+
+    # Если список пустой
+    if not objects:
+        raise HTTPException(
+            status_code=404,
+            detail=f'Страна "{name}" не найдена'
+        )
+
+    country = objects[0]
 
     return {
         "country": country["names"]["common"],
