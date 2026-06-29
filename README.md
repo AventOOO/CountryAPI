@@ -80,6 +80,29 @@ GET /country/{name}/flag
 GET /country/{name}?fields=capital,population
 ```
 
+## Project Structure
+
+```
+CountryAPI/
+│── main.py
+│── services.py
+│── requirements.txt
+│── README.md
+│── .gitignore
+│── .env (not included in repo)
+│── venv/ (ignored)
+```
+
+## Learning outcomes
+
+This project demonstrates:
+
+- Working with REST APIs
+- FastAPI framework usage
+- Git branching workflow
+- Environment variables usage
+- Error handling in API requests
+
 ## Author
 
 Makar Zhukov
