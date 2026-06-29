@@ -15,7 +15,7 @@ def root():
     return {
         "project": "CountryAPI",
         "version": "1.0",
-        "author": "Макар Жуков",
+        "author": "Makar Zhukov",
         "description": "REST API for getting information about countries.",
         "available_endpoints": {
             "/country/{name}": "Get full information about a country",
