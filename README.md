@@ -1,20 +1,20 @@
 # CountryAPI
 
-REST API application developed with FastAPI.
+REST API-приложение, разработанное с использованием FastAPI.
 
-## Description
+## Описание
 
-This project uses the REST Countries API v5 to retrieve information about countries.
+В этом проекте используется REST Countries API v5 для получения информации о странах.
 
-The application allows users to:
+Приложение позволяет пользователям:
 
-- Get full information about a country.
-- Get the capital city.
-- Get the population.
-- Get the country flag.
-- Return only selected fields using query parameters.
+- Получать полную информацию о стране.
+- Узнавать столицу.
+- Узнавать численность населения.
+- Получать изображение флага страны.
+- Запрашивать только определенные поля с помощью параметров запроса.
 
-## Technologies
+## Технологии
 
 - Python 3.13
 - FastAPI
@@ -22,65 +22,65 @@ The application allows users to:
 - Uvicorn
 - Git
 
-## Installation
+## Установка
 
-Clone the repository.
+Клонируйте репозиторий.
 
 ```bash
 git clone <repository_url>
 ```
 
-Install dependencies.
+Установите зависимости.
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Run the server.
+Запустите сервер.
 
 ```bash
 uvicorn main:app --reload
 ```
 
-## Endpoints
+## Эндпоинты
 
-### Get full information
+### Получение полной информации
 
 ```
 GET /country/{name}
 ```
 
-Example:
+Пример:
 
 ```
 GET /country/japan
 ```
 
-### Get capital
+### Получение столицы
 
 ```
 GET /country/{name}/capital
 ```
 
-### Get population
+### Получение численности населения
 
 ```
 GET /country/{name}/population
 ```
 
-### Get flag
+### Получение флага
 
 ```
 GET /country/{name}/flag
 ```
 
-### Filter fields
+### Фильтрация полей
 
 ```
 GET /country/{name}?fields=capital,population
 ```
 
-## Project Structure
+## Структура проекта
 
 ```
 CountryAPI/
@@ -89,20 +89,20 @@ CountryAPI/
 │── requirements.txt
 │── README.md
 │── .gitignore
-│── .env (not included in repo)
-│── venv/ (ignored)
+│── .env (не включен в репозиторий)
+│── venv/ (игнорируется)
 ```
 
-## Learning outcomes
+## Чему посвящен проект
 
-This project demonstrates:
+Этот проект демонстрирует:
 
-- Working with REST APIs
-- FastAPI framework usage
-- Git branching workflow
-- Environment variables usage
-- Error handling in API requests
+- Работу с REST API
+- Использование фреймворка FastAPI
+- Работу с ветками в Git
+- Использование переменных окружения
+- Обработку ошибок при выполнении API-запросов
 
-## Author
+## Автор
 
-Makar Zhukov
+Макар Жуков
