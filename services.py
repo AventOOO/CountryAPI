@@ -11,9 +11,7 @@ BASE_URL = "https://api.restcountries.com/countries/v5/names.common"
 
 
 def get_country_data(name: str):
-    headers = {
-        "Authorization": f"Bearer {API_KEY}"
-    }
+    headers = {"Authorization": f"Bearer {API_KEY}"}
 
     response = requests.get(f"{BASE_URL}/{name}", headers=headers)
 
@@ -28,6 +26,7 @@ def get_country_data(name: str):
         raise HTTPException(status_code=404, detail="Country not found")
 
     return objects[0]
+
 
 
 def get_country(name: str):
