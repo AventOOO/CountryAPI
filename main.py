@@ -1,3 +1,5 @@
+# CountryAPI - REST learning project
+
 from fastapi import FastAPI, Query
 from services import (
     get_country,
@@ -14,24 +16,12 @@ app = FastAPI()
 def root():
     return {
         "project": "CountryAPI",
-        "version": "1.0",
-        "author": "Makar Zhukov",
-        "description": "REST API for getting information about countries.",
-        "available_endpoints": {
-            "/country/{name}": "Get full information about a country",
-            "/country/{name}/capital": "Get the capital",
-            "/country/{name}/population": "Get the population",
-            "/country/{name}/flag": "Get the country flag",
-            "/country/{name}?fields=capital,population": "Return only selected fields"
-        }
-    }
+        "status": "running",
+        "version": "1.1"}
 
 
 @app.get("/country/{name}")
-def country(
-    name: str,
-    fields: str | None = Query(default=None)
-):
+def country(name: str, fields: str | None = Query(default=None)):
     if fields is None:
         return get_country(name)
 
@@ -60,17 +50,17 @@ def country(
 
     return result
 
-
+#Столица
 @app.get("/country/{name}/capital")
 def capital(name: str):
     return get_capital(name)
 
-
+#Население
 @app.get("/country/{name}/population")
 def population(name: str):
     return get_population(name)
 
-
+#Флаг
 @app.get("/country/{name}/flag")
 def flag(name: str):
     return get_flag(name)
