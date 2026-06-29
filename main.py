@@ -13,7 +13,17 @@ app = FastAPI()
 @app.get("/")
 def root():
     return {
-        "message": "Country API is running"
+        "project": "CountryAPI",
+        "version": "1.0",
+        "author": "Макар Жуков",
+        "description": "REST API for getting information about countries.",
+        "available_endpoints": {
+            "/country/{name}": "Get full information about a country",
+            "/country/{name}/capital": "Get the capital",
+            "/country/{name}/population": "Get the population",
+            "/country/{name}/flag": "Get the country flag",
+            "/country/{name}?fields=capital,population": "Return only selected fields"
+        }
     }
 
 
