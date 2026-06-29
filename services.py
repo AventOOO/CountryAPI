@@ -1,7 +1,11 @@
 import requests
 from fastapi import HTTPException
+import os
+from dotenv import load_dotenv
 
-API_KEY = "rc_live_04493428440b4c949250cc5d380b4ee6"
+load_dotenv()
+
+API_KEY = os.getenv("API_KEY")
 
 BASE_URL = "https://api.restcountries.com/countries/v5/names.common"
 
