@@ -1,41 +1,66 @@
-from fastapi import FastAPI
-from services import get_country, get_country_data
+from fastapi import FastAPI, Query
+from services import (
+    get_country,
+    get_country_data,
+    get_capital,
+    get_population,
+    get_flag
+)
 
 app = FastAPI()
 
 
 @app.get("/")
 def root():
-    return {"message": "Country API"}
+    return {
+        "message": "Country API is running"
+    }
 
 
 @app.get("/country/{name}")
-def country(name: str):
-    return get_country(name)
+def country(
+    name: str,
+    fields: str | None = Query(default=None)
+):
+    if fields is None:
+        return get_country(name)
+
+    country = get_country_data(name)
+
+    available_fields = {
+        "country": country["names"]["common"],
+        "official_name": country["names"]["official"],
+        "capital": country["capitals"][0]["name"],
+        "population": country["population"],
+        "area": country["area"]["kilometers"],
+        "region": country["region"],
+        "subregion": country["subregion"],
+        "language": country["languages"][0]["name"],
+        "currency": country["currencies"][0]["name"],
+        "flag": country["flag"]["emoji"]
+    }
+
+    result = {}
+
+    for field in fields.split(","):
+        field = field.strip()
+
+        if field in available_fields:
+            result[field] = available_fields[field]
+
+    return result
 
 
 @app.get("/country/{name}/capital")
 def capital(name: str):
-    country = get_country_data(name)
-    return {
-        "country": country["names"]["common"],
-        "capital": country["capitals"][0]["name"]
-    }
+    return get_capital(name)
 
 
 @app.get("/country/{name}/population")
 def population(name: str):
-    country = get_country_data(name)
-    return {
-        "country": country["names"]["common"],
-        "population": country["population"]
-    }
+    return get_population(name)
 
 
 @app.get("/country/{name}/flag")
 def flag(name: str):
-    country = get_country_data(name)
-    return {
-        "country": country["names"]["common"],
-        "flag": country["flag"]["emoji"]
-    }
+    return get_flag(name)
