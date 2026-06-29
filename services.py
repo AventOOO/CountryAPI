@@ -18,4 +18,17 @@ def get_country(name: str):
     if response.status_code != 200:
         return None
 
-    return response.json()
+    country = response.json()["data"]["objects"][0]
+
+    return {
+        "country": country["names"]["common"],
+        "official_name": country["names"]["official"],
+        "capital": country["capitals"][0]["name"],
+        "population": country["population"],
+        "area": country["area"]["kilometers"],
+        "region": country["region"],
+        "subregion": country["subregion"],
+        "language": country["languages"][0]["name"],
+        "currency": country["currencies"][0]["name"],
+        "flag": country["flag"]["emoji"]
+    }
