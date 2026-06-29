@@ -4,6 +4,30 @@ from fastapi import HTTPException
 API_KEY = "rc_live_04493428440b4c949250cc5d380b4ee6"
 BASE_URL = "https://api.restcountries.com/countries/v5/names.common"
 
+def get_country_data(name: str):
+    headers = {
+        "Authorization": f"Bearer {API_KEY}"
+    }
+
+    url = f"{BASE_URL}/{name}"
+    response = requests.get(url, headers=headers)
+
+    if response.status_code != 200:
+        raise HTTPException(
+            status_code=response.status_code,
+            detail="Ошибка при обращении к REST Countries API"
+        )
+
+    data = response.json()
+    objects = data.get("data", {}).get("objects", [])
+
+    if not objects:
+        raise HTTPException(
+            status_code=404,
+            detail=f'Страна "{name}" не найдена'
+        )
+
+    return objects[0]
 
 def get_country(name: str):
     headers = {
@@ -32,7 +56,7 @@ def get_country(name: str):
             detail=f'Страна "{name}" не найдена'
         )
 
-    country = objects[0]
+    country = get_country_data(name)
 
     return {
         "country": country["names"]["common"],
