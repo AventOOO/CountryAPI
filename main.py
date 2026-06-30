@@ -1,5 +1,6 @@
 # CountryAPI - REST learning project
 
+import json
 from fastapi import FastAPI, Query
 from services import (
     get_country,
@@ -23,30 +24,32 @@ def root():
 @app.get("/country/{name}")
 def country(name: str, fields: str | None = Query(default=None)):
     if fields is None:
-        return get_country(name)
+        result = get_country(name)
+    else:
+        country = get_country_data(name)
 
-    country = get_country_data(name)
+        available_fields = {
+            "country": country["names"]["common"],
+            "official_name": country["names"]["official"],
+            "capital": country["capitals"][0]["name"],
+            "population": country["population"],
+            "area": country["area"]["kilometers"],
+            "region": country["region"],
+            "subregion": country["subregion"],
+            "language": country["languages"][0]["name"],
+            "currency": country["currencies"][0]["name"],
+            "flag": country["flag"]["emoji"]
+        }
 
-    available_fields = {
-        "country": country["names"]["common"],
-        "official_name": country["names"]["official"],
-        "capital": country["capitals"][0]["name"],
-        "population": country["population"],
-        "area": country["area"]["kilometers"],
-        "region": country["region"],
-        "subregion": country["subregion"],
-        "language": country["languages"][0]["name"],
-        "currency": country["currencies"][0]["name"],
-        "flag": country["flag"]["emoji"]
-    }
+        result = {}
 
-    result = {}
+        for field in fields.split(","):
+            field = field.strip()
 
-    for field in fields.split(","):
-        field = field.strip()
+            if field in available_fields:
+                result[field] = available_fields[field]
 
-        if field in available_fields:
-            result[field] = available_fields[field]
+    print(json.dumps(result, ensure_ascii=False, indent=4))
 
     return result
 

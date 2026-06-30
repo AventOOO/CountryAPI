@@ -1,7 +1,9 @@
-import requests
-from fastapi import HTTPException
+import json
 import os
+
+import requests
 from dotenv import load_dotenv
+from fastapi import HTTPException
 
 load_dotenv()
 
@@ -11,21 +13,23 @@ BASE_URL = "https://api.restcountries.com/countries/v5/names.common"
 
 
 def get_country_data(name: str):
-    headers = {"Authorization": f"Bearer {API_KEY}"}
+    headers = {
+        "Authorization": f"Bearer {API_KEY}"
+    }
 
     response = requests.get(f"{BASE_URL}/{name}", headers=headers)
 
     if response.status_code != 200:
         raise HTTPException(status_code=400, detail="API error")
 
-    data = response.json()
+    json_response = response.json()
 
-    objects = data.get("data", {}).get("objects", [])
+    countries = json_response.get("data", {}).get("objects", [])
 
-    if not objects:
+    if len(countries) == 0:
         raise HTTPException(status_code=404, detail="Country not found")
 
-    return objects[0]
+    return countries[0]
 
 
 
