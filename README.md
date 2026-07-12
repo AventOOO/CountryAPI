@@ -41,7 +41,11 @@ pip install -r requirements.txt
 ```bash
 uvicorn main:app --reload
 ```
+Запустите программу.
 
+```bash
+streamlit run gui.py
+```
 ## Эндпоинты
 
 ### Получение полной информации
@@ -74,17 +78,12 @@ GET /country/{name}/population
 GET /country/{name}/flag
 ```
 
-### Фильтрация полей
-
-```
-GET /country/{name}?fields=capital,population
-```
-
 ## Структура проекта
 
 ```
 CountryAPI/
 │── main.py
+│── gui.py
 │── services.py
 │── requirements.txt
 │── README.md
@@ -102,6 +101,7 @@ CountryAPI/
 - Работу с ветками в Git
 - Использование переменных окружения
 - Обработку ошибок при выполнении API-запросов
+- Создание GUI для работы с REST API сервисом
 
 ## Автор
 
