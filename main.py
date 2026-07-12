@@ -1,5 +1,3 @@
-# CountryAPI - REST learning project
-
 import json
 from fastapi import FastAPI, Query
 from services import (
@@ -12,6 +10,15 @@ from services import (
 
 app = FastAPI()
 
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def root():
